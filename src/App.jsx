@@ -374,7 +374,7 @@ const addSanction = (agent) => {
                   <div className="grid grid-cols-2 gap-4 mb-4">
                     <input
                       value={agent.nom}
-                      onChange={(e) => {
+                     onChange={async (e) => {
                         const updated = [...agents];
                         updated[agents.indexOf(agent)].nom = e.target.value;
                         setAgents(updated);
@@ -385,7 +385,7 @@ const addSanction = (agent) => {
 
                     <input
                       value={agent.matricule}
-                      onChange={(e) => {
+                      onChange={async (e) => {
                         const updated = [...agents];
                         updated[agents.indexOf(agent)].matricule = e.target.value;
                         setAgents(updated);
@@ -399,7 +399,7 @@ const addSanction = (agent) => {
                     <input
                       value={agent.telephone}
                       placeholder="Téléphone"
-                      onChange={(e) => {
+                      onChange={async (e) => {
                         const updated = [...agents];
                         updated[agents.indexOf(agent)].telephone = e.target.value;
                         setAgents(updated);
@@ -411,7 +411,7 @@ const addSanction = (agent) => {
                     <input
                       value={agent.rib}
                       placeholder="RIB"
-                      onChange={(e) => {
+                      onChange={async (e) => {
                         const updated = [...agents];
                         updated[agents.indexOf(agent)].rib = e.target.value;
                         setAgents(updated);
@@ -424,7 +424,7 @@ const addSanction = (agent) => {
                   <div className="grid grid-cols-2 gap-4 mb-6">
                     <select
                       value={agent.grade}
-                      onChange={(e) => {
+                      onChange={async (e) => {
                         const updated = [...agents];
                         updated[agents.indexOf(agent)].grade = e.target.value;
                         setAgents(updated);
@@ -439,7 +439,7 @@ const addSanction = (agent) => {
 
                     <select
                       value={agent.statut}
-                      onChange={(e) => {
+                      onChange={async (e) => {
                         const updated = [...agents];
                         updated[agents.indexOf(agent)].statut = e.target.value;
                         setAgents(updated);
