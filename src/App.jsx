@@ -70,7 +70,7 @@ const fetchAgents = async () => {
   const users = [
   {
     username: "drh",
-    password: "gruppe6",
+    password: "noam",
     role: "DRH",
   },
 
@@ -137,6 +137,24 @@ const deleteAgent = async (id) => {
   fetchAgents();
 };
 
+const saveAgent = async (agent) => {
+  await supabase
+    .from("agents")
+    .update({
+      nom: agent.nom,
+      matricule: agent.matricule,
+      grade: agent.grade,
+      statut: agent.statut,
+      telephone: agent.telephone,
+      rib: agent.rib,
+      sanctions: agent.sanctions,
+      promotions: agent.promotions,
+      notes: agent.notes,
+    })
+    .eq("id", agent.id);
+};
+
+const addSanction = (agent) => {
   const addSanction = (agent) => {
     const sanction = window.prompt("Entrer la sanction :");
 
@@ -144,6 +162,7 @@ const deleteAgent = async (id) => {
       const updated = [...agents];
       updated[agents.indexOf(agent)].sanctions.push(sanction);
       setAgents(updated);
+      saveAgent(updated[agents.indexOf(agent)]);
     }
   };
 
@@ -154,6 +173,7 @@ const deleteAgent = async (id) => {
       const updated = [...agents];
       updated[agents.indexOf(agent)].promotions.push(promotion);
       setAgents(updated);
+      saveAgent(updated[agents.indexOf(agent)]);
     }
   };
 
@@ -175,7 +195,7 @@ const deleteAgent = async (id) => {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             className="w-full bg-black border border-zinc-700 rounded-2xl px-5 py-4 mb-4"
-          />
+          />  
 
           <input
             type="password"
@@ -358,6 +378,7 @@ const deleteAgent = async (id) => {
                         const updated = [...agents];
                         updated[agents.indexOf(agent)].nom = e.target.value;
                         setAgents(updated);
+                        saveAgent(updated[agents.indexOf(agent)]);
                       }}
                       className="bg-black border border-zinc-700 rounded-2xl px-4 py-3"
                     />
@@ -368,6 +389,7 @@ const deleteAgent = async (id) => {
                         const updated = [...agents];
                         updated[agents.indexOf(agent)].matricule = e.target.value;
                         setAgents(updated);
+                        saveAgent(updated[agents.indexOf(agent)]);
                       }}
                       className="bg-black border border-zinc-700 rounded-2xl px-4 py-3"
                     />
@@ -381,6 +403,7 @@ const deleteAgent = async (id) => {
                         const updated = [...agents];
                         updated[agents.indexOf(agent)].telephone = e.target.value;
                         setAgents(updated);
+                        saveAgent(updated[agents.indexOf(agent)]);
                       }}
                       className="bg-black border border-zinc-700 rounded-2xl px-4 py-3"
                     />
@@ -392,6 +415,7 @@ const deleteAgent = async (id) => {
                         const updated = [...agents];
                         updated[agents.indexOf(agent)].rib = e.target.value;
                         setAgents(updated);
+                        saveAgent(updated[agents.indexOf(agent)]);
                       }}
                       className="bg-black border border-zinc-700 rounded-2xl px-4 py-3"
                     />
@@ -404,6 +428,7 @@ const deleteAgent = async (id) => {
                         const updated = [...agents];
                         updated[agents.indexOf(agent)].grade = e.target.value;
                         setAgents(updated);
+                        saveAgent(updated[agents.indexOf(agent)]);
                       }}
                       className="bg-black border border-zinc-700 rounded-2xl px-4 py-3"
                     >
@@ -418,6 +443,7 @@ const deleteAgent = async (id) => {
                         const updated = [...agents];
                         updated[agents.indexOf(agent)].statut = e.target.value;
                         setAgents(updated);
+                        saveAgent(updated[agents.indexOf(agent)]);
                       }}
                       className="bg-black border border-zinc-700 rounded-2xl px-4 py-3"
                     >
@@ -490,6 +516,7 @@ const deleteAgent = async (id) => {
                         const updated = [...agents];
                         updated[agents.indexOf(agent)].notes = e.target.value;
                         setAgents(updated);
+                        saveAgent(updated[agents.indexOf(agent)]);
                       }}
                       className="w-full min-h-[140px] bg-black border border-zinc-700 rounded-2xl p-4"
                     ></textarea>
