@@ -210,8 +210,12 @@ const deleteAgent = async (id) => {
         <div className="space-y-3">
           <div className="bg-zinc-900 border border-emerald-500/20 rounded-3xl p-5 mb-6">
             <p className="text-zinc-500 text-sm mb-2">Connecté en tant que</p>
-            <h2 className="text-2xl font-black text-emerald-400">Directeur RH</h2>
-            <p className="text-zinc-400 mt-1">Gruppe 6 • Unity RP</p>
+            <h2 className="text-2xl font-black text-emerald-400">
+            {currentUser?.role} 
+            </h2>
+            <p className="text-zinc-400 mt-1">
+            {currentUser?.username} • Gruppe 6
+            </p>
 
             <div className="mt-4 flex items-center gap-2">
               <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
