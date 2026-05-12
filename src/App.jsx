@@ -67,14 +67,44 @@ const fetchAgents = async () => {
     (agent) => agent.statut === "Archivisé"
   );
 
-  const login = () => {
-    if (username === "drh" && password === "gruppe6") {
-      setIsLoggedIn(true);
-      setError("");
-    } else {
-      setError("Identifiants incorrects");
-    }
-  };
+  const users = [
+  {
+    username: "drh",
+    password: "gruppe6",
+    role: "DRH",
+  },
+
+  {
+    username: "directrice",
+    password: "einrod",
+    role: "Directrice",
+  },
+
+  {
+    username: "codirecteur",
+    password: "kronos",
+    role: "Co-directeur",
+  },
+
+];
+
+const [currentUser, setCurrentUser] = useState(null);
+
+const login = () => {
+  const foundUser = users.find(
+    (user) =>
+      user.username === username &&
+      user.password === password
+  );
+
+  if (foundUser) {
+    setCurrentUser(foundUser);
+    setIsLoggedIn(true);
+    setError("");
+  } else {
+    setError("Identifiants incorrects");
+  }
+};
 
 const addAgent = async () => {
   const newAgent = {
