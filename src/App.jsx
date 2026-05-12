@@ -1,38 +1,21 @@
 import { useEffect, useState } from "react";
-
+import { supabase } from "./supabase";
 export default function UnityRPDRH() {
-  const savedAgents = localStorage.getItem("gruppe6_agents");
+  
+const [agents, setAgents] = useState([]);
+useEffect(() => {
+  fetchAgents();
+}, []);
 
-  const [agents, setAgents] = useState(
-    savedAgents
-      ? JSON.parse(savedAgents)
-      : [
-          {
-            id: 1,
-            nom: "Erwan Lefevre",
-            matricule: "G6-204",
-            grade: "DRH",
-            statut: "Actif",
-            telephone: "06 00 00 00 00",
-            rib: "FR76 3000 4000 5000 6000 7000 189",
-            sanctions: ["Avertissement écrit"],
-            promotions: ["Promotion Officier"],
-            notes: "Excellent agent.",
-          },
-          {
-            id: 2,
-            nom: "Creed Wilson",
-            matricule: "G-09",
-            grade: "Agent Elite",
-            statut: "Suspendu",
-            telephone: "07 11 22 33 44",
-            rib: "FR21 9000 1000 2000 3000 4000 555",
-            sanctions: ["Retard de service"],
-            promotions: [],
-            notes: "Surveillance renforcée.",
-          },
-        ]
-  );
+const fetchAgents = async () => {
+  const { data, error } = await supabase
+    .from("agents")
+    .select("*");
+
+  if (data) {
+    setAgents(data);
+  }
+};
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState("");
@@ -41,9 +24,7 @@ export default function UnityRPDRH() {
   const [activePage, setActivePage] = useState("dashboard");
   const [search, setSearch] = useState("");
 
-  useEffect(() => {
-    localStorage.setItem("gruppe6_agents", JSON.stringify(agents));
-  }, [agents]);
+  
 
   const grades = [
     "Stagiaire",
@@ -95,26 +76,36 @@ export default function UnityRPDRH() {
     }
   };
 
-  const addAgent = () => {
-    const newAgent = {
-      id: Date.now(),
-      nom: "Nouvel Agent",
-      matricule: `G6-${Math.floor(Math.random() * 999)}`,
-      grade: "Stagiaire",
-      statut: "Actif",
-      telephone: "",
-      rib: "",
-      sanctions: [],
-      promotions: [],
-      notes: "",
-    };
-
-    setAgents([...agents, newAgent]);
+const addAgent = async () => {
+  const newAgent = {
+    nom: "Nouvel Agent",
+    matricule: `G6-${Math.floor(Math.random() * 999)}`,
+    grade: "Stagiaire",
+    fac: "Gruppe 6",
+    statut: "Actif",
+    recrutement: new Date().toLocaleDateString(),
+    telephone: "",
+    rib: "",
+    sanctions: [],
+    promotions: [],
+    notes: "",
   };
 
-  const deleteAgent = (id) => {
-    setAgents(agents.filter((agent) => agent.id !== id));
-  };
+  await supabase
+    .from("agents")
+    .insert([newAgent]);
+
+  fetchAgents();
+};
+
+const deleteAgent = async (id) => {
+  await supabase
+    .from("agents")
+    .delete()
+    .eq("id", id);
+
+  fetchAgents();
+};
 
   const addSanction = (agent) => {
     const sanction = window.prompt("Entrer la sanction :");
